@@ -37,6 +37,14 @@ def create_matrix(astring):
         matrix.append(row)
     return matrix
 
+
+def first_red(matrix):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == "4":
+                return (i, j)
+    return 0
+
 def count_tiles(matrix):
     n = 0
     for line in matrix:
@@ -98,6 +106,7 @@ def game_loop(level):
     level_str = get_level_str('data/levels/series1.pod', level)
     player_x, player_y = get_starting_pos(level_str)
     matrix = create_matrix(level_str)
+    first_red_pos = first_red(matrix)
     number_to_beat = count_tiles(matrix)
     text = font.render("Nível: {}/20".format(level + 1), False, (255, 255, 255))
     stars = []
@@ -140,10 +149,12 @@ def game_loop(level):
                 player_y -= 1
             if event.key == pygame.K_DOWN:
                 player_y += 1
+            if event.key == pygame.K_n:
+                return True
 
         if old_player_x != player_x or old_player_y != player_y:
             if matrix[old_player_y][old_player_x] == "5":
-                player_x, player_y = get_starting_pos(level_str)
+                player_y, player_x = first_red_pos
             if player_x < 0 or player_x >= 12 or player_y < 0 or player_y >= 12 or matrix[player_y][player_x] == "0":
                 # nao permitir mover para ali
                 player_x = old_player_x
