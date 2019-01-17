@@ -128,7 +128,7 @@ def game_loop(level):
                     tile = tiles[tile-1]
                     window.blit(tile, (x*tile_width, y*tile_height))
         window.blit(player, (player_x*tile_width, player_y*tile_height))
-        window.blit(text, (0, window_height - tile_height))
+        window.blit(text, (0, window_height - tile_height/1.5))
         pygame.display.flip()
 
         # Eventos
